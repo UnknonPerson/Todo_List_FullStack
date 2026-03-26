@@ -5,7 +5,7 @@ const InfoCard = (props) => {
   return (
     <div className='backdrop-blur-lg bg-white/10 border border-white/20 
     rounded-2xl shadow-2xl flex flex-col items-center text-center 
-    w-70 p-6 gap-4 hover:scale-105 transition-all duration-300'>
+    w-70 p-6 gap-4 hover:scale-105 transition-all duration-300 m-10'>
 
       <img  
         src={props.logo || logo}
