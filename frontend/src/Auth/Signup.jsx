@@ -19,7 +19,7 @@ const Signup = () => {
         </div>
 
         {/* DIVIDER */}
-        <div className='hidden md:block w-[1px] h-80 bg-white/30'></div>
+        <div className='hidden md:block w-1 h-80 bg-white/30'></div>
 
         {/* FORM */}
         <div className='w-full max-w-sm'>
