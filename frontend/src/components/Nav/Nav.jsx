@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Nav = () => {
   return (
@@ -11,24 +12,24 @@ rounded-2xl shadow-2xl w-full my-3">
       </div>
       <ul className="text-white flex items-center gap-6">
         <li>
-          <a href="#" className="hover:text-purple-300 transition duration-300">
+          <Link to="" className="hover:text-purple-300 transition duration-300">
             Home
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#" className="hover:text-purple-300 transition duration-300">
+          <Link to="#" className="hover:text-purple-300 transition duration-300">
             About
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#" className="hover:text-purple-300 transition duration-300">
+          <Link to="#" className="hover:text-purple-300 transition duration-300">
             Services
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#" className=" transition duration-300 border px-3 py-1 rounded-2xl bg-white text-black hover:bg-transparent hover:text-white">
+          <Link to="login" className=" transition duration-300 border px-3 py-1 rounded-2xl bg-white text-black hover:bg-transparent hover:text-white">
             Login
-          </a>
+          </Link>
         </li>
       </ul>
     </div>

@@ -1,3 +1,4 @@
+import Login from "./Auth/Login"
 import Signup from "./Auth/Signup"
 import InfoCard from "./components/Cards/InfoCard"
 import Footer from "./components/Footer/Footer"
@@ -11,9 +12,7 @@ function App() {
 
   return (
   <>
-    <Nav />
-    <Signup />
-    <Footer />
+
   </>
   )
 }
