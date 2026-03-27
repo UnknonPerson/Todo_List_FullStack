@@ -7,6 +7,7 @@ import Layout from './Layout.jsx'
 import Signup from './Auth/Signup.jsx'
 import Login from './Auth/Login.jsx'
 import Home from './components/Home/Home.jsx'
+import Todo from './page/Todo/Todo.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -14,6 +15,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path='signup' element={<Signup />} />
       <Route path='login' element={<Login />} />
+      <Route path='todo' element={<Todo />} />
     </Route>
   )
 )

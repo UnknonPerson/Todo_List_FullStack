@@ -1,7 +1,19 @@
 import React from 'react'
 import pmg from '../assets/sign.png'
+import { useForm } from 'react-hook-form'
 
 const Signup = () => {
+
+    const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
+
+  const onSubmit = (data) => {
+    console.log(data);
+  }
+
   return (
     <div className='flex justify-center items-center min-h-screen px-4'>
       
@@ -23,7 +35,7 @@ const Signup = () => {
 
         {/* FORM */}
         <div className='w-full max-w-sm'>
-          <form className='flex flex-col gap-4'>
+          <form className='flex flex-col gap-4' onSubmit={handleSubmit(onSubmit)}>
 
             <h1 className='text-2xl font-bold text-center mb-2'>
               SIGN UP
@@ -34,7 +46,7 @@ const Signup = () => {
               <label className='text-sm'>Username</label>
               <input 
                 type="text" 
-                name='username' 
+                {...register("username")} 
                 placeholder='Enter username'
                 className='bg-white/10 border border-white/20 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500'
               />
@@ -45,7 +57,7 @@ const Signup = () => {
               <label className='text-sm'>Email</label>
               <input 
                 type="email" 
-                name='email' 
+                {...register("email")}
                 placeholder='Enter email'
                 className='bg-white/10 border border-white/20 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500'
               />
@@ -56,7 +68,7 @@ const Signup = () => {
               <label className='text-sm'>Password</label>
               <input 
                 type='password' 
-                name='password' 
+                {...register("password" , { required: {value : true , message: "Password is required"}, minLength: {value: 6 , message: "Password is required to be at least 6 characters long"} })}
                 placeholder='Enter password'
                 className='bg-white/10 border border-white/20 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500'
               />
@@ -67,20 +79,19 @@ const Signup = () => {
               <label className='text-sm'>Confirm Password</label>
               <input 
                 type='password' 
-                name='confirmPassword' 
+                {...register("confirmPassword" , {required: {value: true, message: "Please confirm your password"}})}
                 placeholder='Confirm password'
                 className='bg-white/10 border border-white/20 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500'
               />
             </div>
 
             {/* Button */}
-            <button 
-              className='mt-3 bg-gradient-to-r from-purple-500 to-indigo-600 
+            <input 
+              type="submit" 
+              value="Create Account"
+              className='mt-3 bg-linear-to-r from-purple-500 to-indigo-600 
               hover:scale-105 transition-all duration-300 py-2 rounded-lg font-semibold shadow-lg'
-            >
-              Create Account
-            </button>
-
+            />
           </form>
         </div>
 
