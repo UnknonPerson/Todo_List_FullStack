@@ -10,9 +10,23 @@ const Signup = () => {
     formState: { errors },
   } = useForm()
 
-  const onSubmit = (data) => {
-    console.log(data);
+const onSubmit = async (data) => {
+  try {
+    const res = await fetch("http://localhost:7200/api/v1/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+    console.log(result);
+
+  } catch (error) {
+    console.error("Error:", error);
   }
+};
 
   return (
     <div className='flex justify-center items-center min-h-screen px-4'>

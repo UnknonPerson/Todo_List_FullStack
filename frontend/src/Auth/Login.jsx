@@ -1,7 +1,34 @@
 import React from 'react'
 import log from '../assets/login.png'
+import { useForm } from 'react-hook-form'
 
 const Login = () => {
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    console.log(data);
+    try {
+      const res = await fetch("http://localhost:7200/api/v1/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+      });
+
+    const result = await res.json();
+    console.log(result);
+
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
   return (
     <div className='flex justify-center items-center min-h-screen px-4'>
       
@@ -23,7 +50,7 @@ const Login = () => {
 
         {/* FORM */}
         <div className='w-full max-w-sm'>
-          <form className='flex flex-col gap-4'>
+          <form className='flex flex-col gap-4' onSubmit={handleSubmit(onSubmit)}>
 
             <h1 className='text-2xl font-bold text-center mb-2'>
               Login to Your Account
@@ -34,8 +61,19 @@ const Login = () => {
               <label className='text-sm'>Email</label>
               <input 
                 type="email" 
-                name='email' 
+                {...register("email")}
                 placeholder='Enter email'
+                className='bg-white/10 border border-white/20 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500'
+              />
+            </div>
+
+            {/* Username */}
+            <div className='flex flex-col gap-1'>
+              <label className='text-sm'>Username</label>
+              <input 
+                type="text" 
+                {...register("username")}
+                placeholder='Enter username'
                 className='bg-white/10 border border-white/20 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500'
               />
             </div>
@@ -45,7 +83,7 @@ const Login = () => {
               <label className='text-sm'>Password</label>
               <input 
                 type='password' 
-                name='password' 
+                {...register("password")}
                 placeholder='Enter password'
                 className='bg-white/10 border border-white/20 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500'
               />
