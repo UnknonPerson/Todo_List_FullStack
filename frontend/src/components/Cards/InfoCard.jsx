@@ -8,7 +8,7 @@ const InfoCard = (props) => {
     w-70 p-6 gap-4 hover:scale-105 transition-all duration-300 m-10'>
 
       <img  
-        src={props.logo || logo}
+        src={props.icon || logo}
         alt="logo"
         className="w-20 object-contain"
       />
@@ -18,7 +18,7 @@ const InfoCard = (props) => {
       </h1>
 
       <p className='text-gray-300 text-sm'>
-        {props.message || "Organize and manage your daily tasks efficiently with ease."}
+        {props.description || "Organize and manage your daily tasks efficiently with ease."}
       </p>
 
       <button className='mt-2 px-4 py-2 bg-white/20 text-white 

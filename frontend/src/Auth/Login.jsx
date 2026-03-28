@@ -1,6 +1,7 @@
 import React from 'react'
 import log from '../assets/login.png'
 import { useForm } from 'react-hook-form'
+import { Link } from "react-router-dom";
 
 const Login = () => {
 
@@ -98,6 +99,9 @@ const Login = () => {
             </button>
 
           </form>
+          <div className='text-sm text-center text-gray-400 mt-4'>
+            New here? <Link to="/signup" className='text-purple-400 hover:underline'>Create an account</Link>
+          </div>
         </div>
 
       </div>

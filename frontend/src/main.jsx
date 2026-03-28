@@ -6,8 +6,10 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import Layout from './Layout.jsx'
 import Signup from './Auth/Signup.jsx'
 import Login from './Auth/Login.jsx'
-import Home from './components/Home/Home.jsx'
+
 import Todo from './page/Todo/Todo.jsx'
+import Home from './components/Home/Home.jsx'
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
