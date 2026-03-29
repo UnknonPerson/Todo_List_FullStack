@@ -23,49 +23,49 @@ const SideNav = () => {
                 <ul className="flex flex-col gap-4">
 
                     <li>
-                        <Link to="/"
+                        <Link to="/todo"
                             className={`flex items-center gap-2 p-2 rounded-lg transition
-                            ${isActive("/") ? "bg-white/20 text-purple-300" : "hover:bg-white/10"}`}>
+                            ${isActive("/todo") ? "bg-white/20 text-purple-300" : "hover:bg-white/10"}`}>
                             <LayoutDashboard size={18} /> Dashboard
                         </Link>
                     </li>
 
                     <li>
-                        <Link to="/today"
+                        <Link to="/todo/today"
                             className={`flex items-center gap-2 p-2 rounded-lg transition
-                            ${isActive("/today") ? "bg-white/20 text-purple-300" : "hover:bg-white/10"}`}>
+                            ${isActive("/todo/today") ? "bg-white/20 text-purple-300" : "hover:bg-white/10"}`}>
                             <Calendar size={18} /> Today
                         </Link>
                     </li>
 
                     <li>
-                        <Link to="/tasks"
+                        <Link to="/todo/tasks"
                             className={`flex items-center gap-2 p-2 rounded-lg transition
-                            ${isActive("/tasks") ? "bg-white/20 text-purple-300" : "hover:bg-white/10"}`}>
+                            ${isActive("/todo/tasks") ? "bg-white/20 text-purple-300" : "hover:bg-white/10"}`}>
                             <List size={18} /> All Tasks
                         </Link>
                     </li>
 
                     <li>
-                        <Link to="/completed"
+                        <Link to="/todo/completed"
                             className={`flex items-center gap-2 p-2 rounded-lg transition
-                            ${isActive("/completed") ? "bg-white/20 text-purple-300" : "hover:bg-white/10"}`}>
+                            ${isActive("/todo/completed") ? "bg-white/20 text-purple-300" : "hover:bg-white/10"}`}>
                             <CheckCircle size={18} /> Completed
                         </Link>
                     </li>
 
                     <li>
-                        <Link to="/categories"
+                        <Link to="/todo/categories"
                             className={`flex items-center gap-2 p-2 rounded-lg transition
-                            ${isActive("/categories") ? "bg-white/20 text-purple-300" : "hover:bg-white/10"}`}>
+                            ${isActive("/todo/categories") ? "bg-white/20 text-purple-300" : "hover:bg-white/10"}`}>
                             <List size={18} /> Categories
                         </Link>
                     </li>
 
                     <li className="mt-4 border-t border-white/20 pt-4">
-                        <Link to="/settings"
+                        <Link to="/todo/settings"
                             className={`flex items-center gap-2 p-2 rounded-lg transition
-                            ${isActive("/settings") ? "bg-white/20 text-purple-300" : "hover:bg-white/10"}`}>
+                            ${isActive("/todo/settings") ? "bg-white/20 text-purple-300" : "hover:bg-white/10"}`}>
                             <Settings size={18} /> Settings
                         </Link>
                     </li>

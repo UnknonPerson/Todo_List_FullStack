@@ -4,6 +4,7 @@ import TaskCard from '../../components/TodoList/TaskCard'
 import TaskList from '../../components/TodoList/TaskList'
 import SideNav from '../../components/Nav/SideNav'
 import AddTask from '../../components/TodoList/AddTask'
+import { Outlet } from 'react-router-dom'
 
 const Todo = () => {
 
@@ -11,7 +12,7 @@ const Todo = () => {
 
   useEffect(() => {
     document.body.style.overflow = showModal ? 'hidden' : 'auto';
-  }, [showModal]);
+  }, [showModal]);         // Disable background scroll when modal is open 
 
   return (
     <div className='flex min-h-screen bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e]'>
@@ -40,7 +41,7 @@ const Todo = () => {
         </div>
 
         {/* TASK LIST */}
-        <TaskList addbtn={() => setShowModal(true)} />
+        <Outlet /> {/* Nested routes will render here, e.g. <Tasks /> when path is /todo/task */}
 
       </div>
 

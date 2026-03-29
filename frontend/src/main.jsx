@@ -10,6 +10,9 @@ import Login from './Auth/Login.jsx'
 import Todo from './page/Todo/Todo.jsx'
 import Home from './components/Home/Home.jsx'
 import Today from './components/TodoList/Today.jsx'
+import Tasks from './components/TodoList/Tasks.jsx'
+import TaskList from './components/TodoList/TaskList.jsx'
+import Catogories from './components/TodoList/Categories.jsx'
 
 
 const router = createBrowserRouter(
@@ -18,9 +21,11 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path='signup' element={<Signup />} />
       <Route path='login' element={<Login />} />
-      <Route path='todo' element={<Todo />} >
-        <Route path='today' element={<Today />} />
-      </Route>
+<Route path='todo' element={<Todo />} >
+  <Route index element={<TaskList />} />
+  <Route path='today' element={<Today />} />
+  <Route path='category' element={<Catogories />} />
+</Route>
     </Route>
   )
 )
