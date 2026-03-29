@@ -6,13 +6,15 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import Layout from './Layout.jsx'
 import Signup from './Auth/Signup.jsx'
 import Login from './Auth/Login.jsx'
-
+import Completed from './components/TodoList/CompletedTask.jsx'
 import Todo from './page/Todo/Todo.jsx'
 import Home from './components/Home/Home.jsx'
 import Today from './components/TodoList/Today.jsx'
 import Tasks from './components/TodoList/Tasks.jsx'
 import TaskList from './components/TodoList/TaskList.jsx'
 import Catogories from './components/TodoList/Categories.jsx'
+import Setting from './components/TodoList/Setting.jsx'
+import Profile from './components/TodoList/Profile.jsx'
 
 
 const router = createBrowserRouter(
@@ -21,10 +23,15 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path='signup' element={<Signup />} />
       <Route path='login' element={<Login />} />
+      <Route path='profile' element={<Profile />} />
 <Route path='todo' element={<Todo />} >
   <Route index element={<TaskList />} />
   <Route path='today' element={<Today />} />
-  <Route path='category' element={<Catogories />} />
+  <Route path='tasks' element={<Tasks />} />
+  <Route path='completed' element={<Completed />} />
+  <Route path='categories' element={<Catogories />} />
+  <Route path='settings' element={<Setting />} />
+  <Route path='*' element={<div className='text-center text-2xl font-bold mt-20'>404 - Page Not Found</div>} />
 </Route>
     </Route>
   )

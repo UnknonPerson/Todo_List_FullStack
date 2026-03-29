@@ -82,14 +82,14 @@ const SideNav = () => {
                     TK
                 </div>
 
-                <div>
+                <Link to="/profile" className="flex-1">
                     <p className="text-sm font-semibold">
                         Tanish Prasad
                     </p>
                     <p className="text-xs text-gray-300">
                         tanish90065@gmai.com
                     </p>
-                </div>
+                </Link>
 
             </div>
 
