@@ -9,6 +9,7 @@ import Login from './Auth/Login.jsx'
 
 import Todo from './page/Todo/Todo.jsx'
 import Home from './components/Home/Home.jsx'
+import Today from './components/TodoList/Today.jsx'
 
 
 const router = createBrowserRouter(
@@ -17,7 +18,9 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path='signup' element={<Signup />} />
       <Route path='login' element={<Login />} />
-      <Route path='todo' element={<Todo />} />
+      <Route path='todo' element={<Todo />} >
+        <Route path='today' element={<Today />} />
+      </Route>
     </Route>
   )
 )
