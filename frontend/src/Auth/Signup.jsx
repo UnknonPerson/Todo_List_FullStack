@@ -1,6 +1,7 @@
 import React from 'react'
 import pmg from '../assets/sign.png'
 import { useForm } from 'react-hook-form'
+import { redirect } from 'react-router-dom'
 
 const Signup = () => {
 
@@ -22,6 +23,10 @@ const onSubmit = async (data) => {
 
     const result = await res.json();
     console.log(result);
+
+    if(result){
+      redirect('/login')
+    }
 
   } catch (error) {
     console.error("Error:", error);
