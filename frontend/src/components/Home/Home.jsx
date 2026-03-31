@@ -2,6 +2,9 @@ import { Car } from 'lucide-react';
 import todoImage from '../../assets/Todo.png';
 import Card from '../Cards/InfoCard';
 import About from '../Cards/About';
+import card1 from '../../assets/card1.png'
+import card2 from '../../assets/card2.png'
+import card3 from '../../assets/card3.png'
 
 const Home = () => {
   return (
@@ -30,17 +33,17 @@ const Home = () => {
       </div>
       <div className='px-20 py-10 grid grid-cols-1 md:grid-cols-3 gap-6'>
         <Card
-          icon={<Car size={24} />}
+          icon={card1}
           title="Easy to Use"
           description="Our intuitive interface makes it simple to manage your tasks."
         />
         <Card
-          icon={<Car size={24} />}
+          icon={card2}
           title="Organize Efficiently"
           description="Keep your tasks organized and never miss a deadline."
         />
         <Card
-          icon={<Car size={24} />}
+          icon={card3}
           title="Track Progress"
           description="Monitor your task completion and stay on top of your goals."
         />
