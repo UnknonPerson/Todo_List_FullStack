@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import log from '../assets/login.png'
 import { useForm } from 'react-hook-form'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import userContext from '../Context/userCntext';
 
 const Login = () => {
+
+  const { setUser } = useContext(userContext);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -13,6 +17,7 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     console.log(data);
+
     try {
       const res = await fetch("http://localhost:7200/api/v1/auth/login", {
         method: "POST",
@@ -22,13 +27,19 @@ const Login = () => {
         body: JSON.stringify(data)
       });
 
-    const result = await res.json();
-    console.log(result);
+      const result = await res.json();
+      console.log(result);
 
-  } catch (error) {
-    console.error("Error:", error);
-  }
-};
+      // ✅ Save user (adjust based on your API response)
+      setUser(result.user);
+
+      // ✅ Redirect after login
+      navigate("/dashboard");
+
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <div className='flex justify-center items-center min-h-screen px-4'>
@@ -37,7 +48,7 @@ const Login = () => {
       rounded-2xl shadow-2xl flex flex-col md:flex-row items-center 
       justify-between text-white p-8 max-w-4xl w-full gap-8 '>
 
-        {/* LEFT IMAGE */}
+        {/* IMAGE */}
         <div className='flex justify-center items-center'>
           <img 
             src={log}
@@ -46,7 +57,6 @@ const Login = () => {
           />
         </div>
 
-        {/* DIVIDER */}
         <div className='hidden md:block w-1 h-80 bg-white/30'></div>
 
         {/* FORM */}
@@ -58,49 +68,43 @@ const Login = () => {
             </h1>
 
             {/* Email */}
-            <div className='flex flex-col gap-1'>
-              <label className='text-sm'>Email</label>
-              <input 
-                type="email" 
-                {...register("email")}
-                placeholder='Enter email'
-                className='bg-white/10 border border-white/20 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500'
-              />
-            </div>
+            <input 
+              type="email" 
+              {...register("email", { required: true })}
+              placeholder='Enter email'
+              className='input-style bg-white/10 border border-white/20 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500'
+            />
 
             {/* Username */}
-            <div className='flex flex-col gap-1'>
-              <label className='text-sm'>Username</label>
-              <input 
-                type="text" 
-                {...register("username")}
-                placeholder='Enter username'
-                className='bg-white/10 border border-white/20 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500'
-              />
-            </div>
+            <input 
+              type="text" 
+              {...register("username")}
+              placeholder='Enter username'
+              className='bg-white/10 border border-white/20 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500'
+            />
 
             {/* Password */}
-            <div className='flex flex-col gap-1'>
-              <label className='text-sm'>Password</label>
-              <input 
-                type='password' 
-                {...register("password")}
-                placeholder='Enter password'
-                className='bg-white/10 border border-white/20 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500'
-              />
-            </div>
+            <input 
+              type='password' 
+              {...register("password", { required: true })}
+              placeholder='Enter password'
+              className='bg-white/10 border border-white/20 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500'
+            />
 
-            {/* Button */}
-            <button 
+             <input 
+              type="submit" 
+              value="Log In"
               className='mt-3 bg-linear-to-r from-purple-500 to-indigo-600 
               hover:scale-105 transition-all duration-300 py-2 rounded-lg font-semibold shadow-lg'
-            >
-              Login
-            </button>
+            />
 
           </form>
+
           <div className='text-sm text-center text-gray-400 mt-4'>
-            New here? <Link to="/signup" className='text-purple-400 hover:underline'>Create an account</Link>
+            New here? 
+            <Link to="/signup" className='text-purple-400 hover:underline'>
+              Create an account
+            </Link>
           </div>
         </div>
 

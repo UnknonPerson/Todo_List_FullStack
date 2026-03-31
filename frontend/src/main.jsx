@@ -15,6 +15,7 @@ import TaskList from './components/TodoList/TaskList.jsx'
 import Catogories from './components/TodoList/Categories.jsx'
 import Setting from './components/TodoList/Setting.jsx'
 import Profile from './components/TodoList/Profile.jsx'
+import UserContextProvider from './Context/UserContextProvider.jsx'
 
 
 const router = createBrowserRouter(
@@ -39,6 +40,8 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <UserContextProvider>
     <RouterProvider router={router} />
+    </UserContextProvider>
   </StrictMode>,
 )
