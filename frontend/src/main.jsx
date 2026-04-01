@@ -14,7 +14,7 @@ import Tasks from './components/TodoList/Tasks.jsx'
 import TaskList from './components/TodoList/TaskList.jsx'
 import Catogories from './components/TodoList/Categories.jsx'
 import Setting from './components/TodoList/Setting.jsx'
-import Profile from './components/TodoList/Profile.jsx'
+import Profile from './page/Profile/Profile.jsx'
 import UserContextProvider from './Context/UserContextProvider.jsx'
 
 
