@@ -1,9 +1,17 @@
 import { User2Icon } from "lucide-react";
-import React from "react";
+import React, { useContext } from "react";
+import userContext from "../../Context/userCntext";
 
 const Profile = () => {
+  const { user, setUser} = useContext(userContext);
 
+  const username = user?.user?.username || "Guest";
+  const email = user?.user?.email || "No email";
 
+const handleLogout = () => {
+  localStorage.removeItem("token");
+  setUser(null);
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
@@ -13,15 +21,15 @@ const Profile = () => {
 
         {/* Profile Header */}
         <div className="flex items-center gap-6 border-b border-white/20 pb-6">
-          <img
-            src={<User2Icon/>}
-            alt="avatar"
-            className="w-20 h-20 rounded-full border-2 border-white/30"
-          />
+
+          {/* Avatar (FIXED) */}
+          <div className="w-20 h-20 rounded-full border-2 border-white/30 flex items-center justify-center bg-white/10">
+            <User2Icon size={40} />
+          </div>
 
           <div>
-            <h2 className="text-2xl font-semibold">Tanish Kumar</h2>
-            <p className="text-sm text-gray-300">tanish@email.com</p>
+            <h2 className="text-2xl font-semibold">{username}</h2>
+            <p className="text-sm text-gray-300">{email}</p>
           </div>
 
           <button className="ml-auto px-4 py-2 rounded-xl bg-white/20 hover:bg-white/30 transition">
@@ -46,17 +54,17 @@ const Profile = () => {
           ))}
         </div>
 
-        
+        {/* Actions */}
         <div className="mt-8 space-y-4">
           <button className="w-full text-left px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 transition">
-             Change Password
+            Change Password
           </button>
 
           <button className="w-full text-left px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 transition">
             Toggle Theme
           </button>
 
-          <button className="w-full text-left px-4 py-3 rounded-xl bg-red-500/20 hover:bg-red-500/30 transition">
+          <button onClick={handleLogout} className="w-full text-left px-4 py-3 rounded-xl bg-red-500/20 hover:bg-red-500/30 transition">
             Logout
           </button>
         </div>

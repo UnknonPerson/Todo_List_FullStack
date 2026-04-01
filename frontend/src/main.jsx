@@ -2,7 +2,6 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
-
 import Layout from './Layout.jsx'
 import Signup from './Auth/Signup.jsx'
 import Login from './Auth/Login.jsx'
@@ -16,6 +15,7 @@ import Catogories from './components/TodoList/Categories.jsx'
 import Setting from './components/TodoList/Setting.jsx'
 import Profile from './page/Profile/Profile.jsx'
 import UserContextProvider from './Context/UserContextProvider.jsx'
+import About from './page/About/About.jsx'
 
 
 const router = createBrowserRouter(
@@ -25,6 +25,7 @@ const router = createBrowserRouter(
       <Route path='signup' element={<Signup />} />
       <Route path='login' element={<Login />} />
       <Route path='profile' element={<Profile />} />
+      <Route path='about' element={<About />} />
 <Route path='todo' element={<Todo />} >
   <Route index element={<TaskList />} />
   <Route path='today' element={<Today />} />

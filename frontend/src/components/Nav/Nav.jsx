@@ -34,7 +34,7 @@ const Nav = () => {
         </li>
 
         <li>
-          <Link to="#" className="hover:text-purple-300 transition">
+          <Link to="/about" className="hover:text-purple-300 transition">
             About
           </Link>
         </li>

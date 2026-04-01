@@ -5,8 +5,13 @@ import About from '../Cards/About';
 import card1 from '../../assets/card1.png'
 import card2 from '../../assets/card2.png'
 import card3 from '../../assets/card3.png'
+import userContext from '../../Context/userCntext';
+import { useContext } from 'react';
 
 const Home = () => {
+
+  const {user} = useContext()
+
   return (
 
     <div>
