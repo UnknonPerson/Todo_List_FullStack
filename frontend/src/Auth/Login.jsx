@@ -6,7 +6,7 @@ import userContext from '../Context/userCntext';
 
 const Login = () => {
 
-  const { setUser } = useContext(userContext);
+  const { setUser , user } = useContext(userContext);
   const navigate = useNavigate();
 
   const {
@@ -31,10 +31,12 @@ const Login = () => {
       console.log(result);
 
       // ✅ Save user (adjust based on your API response)
-      setUser(result.user);
+      setUser(result.data);
+
+      console.log(user);
 
       // ✅ Redirect after login
-      navigate("/dashboard");
+      navigate("/");
 
     } catch (error) {
       console.error("Error:", error);
