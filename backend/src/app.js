@@ -22,4 +22,7 @@ app.use("/api/v1/healthcheck", healthcheackRoutes)
 import  authRoutes from './routes/auth.rout.js'
 app.use("/api/v1/auth" , authRoutes);
 
+import todoRoutes from './routes/todo.router.js'
+app.use("/api/v1/task", todoRoutes);
+
 export default app;
