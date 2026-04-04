@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { WorkflowIcon, CheckCircle, ListTodo, Clock } from 'lucide-react'
 import TaskCard from '../../components/TodoList/TaskCard'
-import TaskList from '../../components/TodoList/TaskList'
 import SideNav from '../../components/Nav/SideNav'
 import AddTask from '../../components/TodoList/AddTask'
 import { Outlet } from 'react-router-dom'
+import taskContext from '../../Context/taskContext'
 
 const Todo = () => {
 
   const [showModal, setShowModal] = useState(false);
+  const { tasks } = useContext(taskContext);
 
   useEffect(() => {
     document.body.style.overflow = showModal ? 'hidden' : 'auto';
@@ -34,7 +35,7 @@ const Todo = () => {
 
         {/* STATS */}
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 backdrop-blur-lg bg-white/10 border border-white/20 p-4 rounded-2xl shadow-2xl'>
-          <TaskCard icon={<WorkflowIcon />} title="Total Task" number="12" last="+2 from yesterday" />
+          <TaskCard icon={<WorkflowIcon />} title="Total Task" number={tasks.length} last="+2 from yesterday" />
           <TaskCard icon={<ListTodo />} title="Pending" number="12" />
           <TaskCard icon={<CheckCircle />} title="Completed" number="7" />
           <TaskCard icon={<Clock />} title="Due Today" number="3" />

@@ -14,7 +14,7 @@ const SideNav = () => {
     return (
         <div className="font-mono flex flex-col justify-between
         backdrop-blur-lg bg-white/10 border border-white/20 
-        rounded-2xl shadow-2xl w-70 h-screen p-5 text-white ml-2 mb-2">
+        rounded-2xl shadow-2xl w-70 h-[100vh] p-5 text-white ml-2 mb-2">
 
             {/* 🔝 TOP MENU */}
             <div>
@@ -59,14 +59,6 @@ const SideNav = () => {
                             className={`flex items-center gap-2 p-2 rounded-lg transition
                             ${isActive("/todo/categories") ? "bg-white/20 text-purple-300" : "hover:bg-white/10"}`}>
                             <List size={18} /> Categories
-                        </Link>
-                    </li>
-
-                    <li className="mt-4 border-t border-white/20 pt-4">
-                        <Link to="/todo/settings"
-                            className={`flex items-center gap-2 p-2 rounded-lg transition
-                            ${isActive("/todo/settings") ? "bg-white/20 text-purple-300" : "hover:bg-white/10"}`}>
-                            <Settings size={18} /> Settings
                         </Link>
                     </li>
 

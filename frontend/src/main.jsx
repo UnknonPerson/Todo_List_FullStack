@@ -12,10 +12,10 @@ import Today from './components/TodoList/Today.jsx'
 import Tasks from './components/TodoList/Tasks.jsx'
 import TaskList from './components/TodoList/TaskList.jsx'
 import Catogories from './components/TodoList/Categories.jsx'
-import Setting from './components/TodoList/Setting.jsx'
 import Profile from './page/Profile/Profile.jsx'
 import UserContextProvider from './Context/UserContextProvider.jsx'
 import About from './page/About/About.jsx'
+import TaskContextProvidee from './Context/TaskContextProvidee.jsx'
 
 
 const router = createBrowserRouter(
@@ -32,7 +32,6 @@ const router = createBrowserRouter(
   <Route path='tasks' element={<Tasks />} />
   <Route path='completed' element={<Completed />} />
   <Route path='categories' element={<Catogories />} />
-  <Route path='settings' element={<Setting />} />
   <Route path='*' element={<div className='text-center text-2xl font-bold mt-20'>404 - Page Not Found</div>} />
 </Route>
     </Route>
@@ -41,8 +40,10 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <TaskContextProvidee>
     <UserContextProvider>
     <RouterProvider router={router} />
     </UserContextProvider>
+    </TaskContextProvidee>
   </StrictMode>,
 )

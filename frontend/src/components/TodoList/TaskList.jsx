@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import AddTask from './AddTask';
+import React, { useContext, useEffect } from 'react'
+import taskContext from '../../Context/taskContext';
 
-const TaskList = ({ addbtn }) => {
+const TaskList = ({addbtn}) => {
 
-  const [tasks, setTasks] = useState([]);
+  const { tasks, setTasks } = useContext(taskContext);
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -21,10 +21,8 @@ const TaskList = ({ addbtn }) => {
 
         const result = await res.json();
 
-        console.log(result.data);
-
         if (res.ok) {
-          setTasks(result.data); 
+          setTasks(result.data);
         }
 
       } catch (error) {
@@ -33,24 +31,21 @@ const TaskList = ({ addbtn }) => {
     };
 
     fetchTasks();
-  }, [addbtn,AddTask]);
+  }, [addbtn]);
 
   return (
-    <div className='mt-8 p-6 rounded-2xl 
-      backdrop-blur-lg bg-white/10 border border-white/20 shadow-xl'>
+    <div className='mt-8 p-6 rounded-2xl backdrop-blur-lg bg-white/10 border border-white/20 shadow-xl'>
 
-      <div className='flex w-full justify-between my-3'>
-        <h2 className='text-lg font-semibold mb-4'>Your Tasks</h2>
-      </div>
+      <h2 className='text-lg font-semibold mb-4'>Your Tasks</h2>
 
       <div className='space-y-3'>
         {tasks.length > 0 ? (
-          tasks.map((task, index) => (
+          tasks.map((task) => (
             <div 
-              key={index}
+              key={task._id}
               className='p-3 rounded-lg bg-white/10 hover:bg-white/20 transition'
             >
-              {task.task || task.Task}
+              {task.task}
             </div>
           ))
         ) : (
@@ -61,4 +56,4 @@ const TaskList = ({ addbtn }) => {
   )
 }
 
-export default TaskList
+export default TaskList;
