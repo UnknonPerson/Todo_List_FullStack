@@ -1,31 +1,39 @@
 import React, { useEffect, useState } from 'react'
+import AddTask from './AddTask';
 
 const TaskList = ({ addbtn }) => {
 
-  const [task , setTask] = useState(null);
+  const [tasks, setTasks] = useState([]);
 
-  useEffect(async () => {
-    try {
-      const res = fetch("http://localhost:7200/api/v1/task/get", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const dataa = JSON.parse(localStorage.getItem("user"));
+        const token = dataa?.accessToken;
 
-      const result = await res.json();
+        const res = await fetch("http://localhost:7200/api/v1/task/get", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-      console.log(result);
+        const result = await res.json();
 
-      if (res.ok) {
-        setTask(result);
+        console.log(result.data);
+
+        if (res.ok) {
+          setTasks(result.data); 
+        }
+
+      } catch (error) {
+        console.log(error);
       }
+    };
 
-    } catch (error) {
-      console.log(error);
-    }
-  }, [])
+    fetchTasks();
+  }, [addbtn,AddTask]);
 
   return (
     <div className='mt-8 p-6 rounded-2xl 
@@ -36,15 +44,18 @@ const TaskList = ({ addbtn }) => {
       </div>
 
       <div className='space-y-3'>
-        <div className='p-3 rounded-lg bg-white/10 hover:bg-white/20 transition'>
-          Task 1
-        </div>
-        <div className='p-3 rounded-lg bg-white/10 hover:bg-white/20 transition'>
-          Task 2
-        </div>
-        <div className='p-3 rounded-lg bg-white/10 hover:bg-white/20 transition'>
-          Task 3
-        </div>
+        {tasks.length > 0 ? (
+          tasks.map((task, index) => (
+            <div 
+              key={index}
+              className='p-3 rounded-lg bg-white/10 hover:bg-white/20 transition'
+            >
+              {task.task || task.Task}
+            </div>
+          ))
+        ) : (
+          <p className="text-gray-300">No tasks yet</p>
+        )}
       </div>
     </div>
   )
