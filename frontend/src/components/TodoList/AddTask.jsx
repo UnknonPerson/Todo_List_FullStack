@@ -21,7 +21,7 @@ const AddTask = ({ onClose }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // ✅ FIXED
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
       });

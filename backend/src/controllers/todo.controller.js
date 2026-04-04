@@ -96,9 +96,29 @@ const toggleComplete = asyncHandler(async (req, res) => {
     );
 });
 
+const getTask = asyncHandler(async (req, res) => {
+    const user = req.user;
+
+    // const tasks = await Todo.find({
+    //     user: user._id
+    // });
+
+    const tasks = await Todo.find({ user: user._id })
+    .sort({ createdAt: -1 });
+
+    if (tasks.length === 0) {
+        throw new ApiError(404, "No tasks found");
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200, tasks, tasks.length ? "Tasks found" : "No tasks yet")
+    );
+});
+
 export {
     creatTask,
     updateTask,
     deleteTask,
     toggleComplete,
+    getTask,
 };
