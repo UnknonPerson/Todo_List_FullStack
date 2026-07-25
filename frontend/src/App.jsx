@@ -5,22 +5,28 @@ import Home from "./Pages/Home";
 import Profile from "./Pages/Profile";
 import { ThemeProvider } from "./context/ThemeContext";
 import { TaskProvider } from "./context/TaskContext";
+import { UserProvider } from "./context/UserContext";
+import Setting from "./Pages/Setting";
+
 
 function App() {
 
   return (
-    <TaskProvider>
-      <ThemeProvider>
-        <Router>
-          <Routes>
-            <Route element={<Layout />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/profile" element={<Profile />} />
-            </Route>
-          </Routes>
-        </Router>
-      </ThemeProvider>
-    </TaskProvider>
+    <UserProvider>
+      <TaskProvider>
+        <ThemeProvider>
+          <Router>
+            <Routes>
+              <Route element={<Layout />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/setting" element={<Setting />} />
+              </Route>
+            </Routes>
+          </Router>
+        </ThemeProvider>
+      </TaskProvider>
+    </UserProvider>
   );
 }
 

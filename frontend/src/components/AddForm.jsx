@@ -1,5 +1,6 @@
 import { X } from 'lucide-react'
 import React from 'react'
+import { useTasks } from '../context/TaskContext';
 
 const AddForm = ({ onClose }) => {
 
@@ -7,9 +8,22 @@ const AddForm = ({ onClose }) => {
     const [dueDate, setDueDate] = React.useState('');
     const [priority, setPriority] = React.useState('Medium');
 
+    const {addTask } = useTasks();
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // Handle form submission logic here
+        try{
+            addTask({
+                title,
+                dueDate,
+                priority
+            });
+            //later handel backend request
+        }catch(e){
+            console.log(e);
+        }
+        onClose();
     }
 
     return (
@@ -79,6 +93,7 @@ const AddForm = ({ onClose }) => {
                     <button
                         type="submit"
                         className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700"
+                        onClick={handleSubmit}
                     >
                         Add Task
                     </button>

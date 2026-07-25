@@ -31,7 +31,7 @@ const menuItems = [
   },
   {
     name: "Settings",
-    path: "/settings",
+    path: "/setting",
     icon: Settings,
   },
 ];
