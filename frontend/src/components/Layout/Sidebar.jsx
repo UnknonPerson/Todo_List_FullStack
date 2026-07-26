@@ -5,13 +5,14 @@ import {
   User2,
   Settings,
   LogOut,
+  Link,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 const menuItems = [
   {
     name: "Dashboard",
-    path: "/",
+    path: "/dashboard",
     icon: LayoutDashboard,
   },
   {
@@ -40,15 +41,13 @@ const Sidebar = () => {
   return (
     <aside className="flex h-screen w-72 flex-col border-r border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
       {/* Logo */}
-      <div className="border-b border-gray-200 px-6 py-6 dark:border-gray-800">
-        <h1 className="text-2xl font-bold text-blue-600">
-          TaskFlow
-        </h1>
+      <NavLink to="/" className="block">
+        <div className="border-b border-gray-200 px-6 py-6 dark:border-gray-800">
+          <h1 className="text-2xl font-bold text-blue-600">TaskFlow</h1>
 
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-          Organize your work
-        </p>
-      </div>
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Organize your work</p>
+        </div>
+      </NavLink>
 
       {/* Navigation */}
       <nav className="flex-1 p-4">
