@@ -73,7 +73,7 @@ const Sidebar = () => {
                     <div className="flex items-center gap-3">
 
                         {/* Logo */}
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/20">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/20">
                             <CheckSquare
                                 size={21}
                                 className="text-white"
@@ -185,7 +185,7 @@ const Sidebar = () => {
                     <div className="flex items-center gap-3">
 
                         {/* Avatar */}
-                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 text-xs font-bold text-white">
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-cyan-500 to-blue-600 text-xs font-bold text-white">
                             {initials}
                         </div>
 

@@ -1,5 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import taskServises from "../Services/taskService.js";
+import { useUser as useAuth } from "./UserContext.jsx";
 
 const TaskContext = createContext(null);
 
@@ -7,6 +8,8 @@ export function TaskProvider({ children }) {
     const [tasks, setTasks] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const { user } = useAuth();
 
     const fetchTasks = async () => {
         setLoading(true);
@@ -22,6 +25,14 @@ export function TaskProvider({ children }) {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        if (user) {
+            fetchTasks();
+        }else {
+            setTasks([]);
+        }
+    }, [user]);
 
     const addTask = async (taskData) => {
         try {

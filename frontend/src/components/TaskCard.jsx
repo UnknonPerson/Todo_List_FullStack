@@ -137,7 +137,7 @@ const TaskCard = ({ task }) => {
                 transition-all duration-200
                 ${
                     completed
-                        ? "border-emerald-200 bg-emerald-50/60 dark:border-emerald-500/20 dark:bg-emerald-500/[0.04]"
+                        ? "border-emerald-200 bg-emerald-50/60 dark:border-emerald-500/20 dark:bg-emerald-500/4"
                         : "border-slate-200 bg-white hover:-translate-y-0.5 hover:border-cyan-300 hover:shadow-lg dark:border-slate-700/60 dark:bg-slate-800/60 dark:hover:border-cyan-500/40 dark:hover:bg-slate-800/80"
                 }
             `}

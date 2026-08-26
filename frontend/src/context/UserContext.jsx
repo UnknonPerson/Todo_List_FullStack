@@ -30,7 +30,7 @@ export const UserProvider = ({children}) => {
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('refreshToken', refreshToken);
 
-            setUser(data);
+            setUser(data?.user || null);
         }
         return res;
     }

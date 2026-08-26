@@ -160,13 +160,13 @@ const Nav = ({ onMenuClick }) => {
                             className="flex items-center gap-2 rounded-xl p-1 transition hover:bg-slate-100 dark:hover:bg-slate-800"
                         >
                             {/* Avatar */}
-                            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 text-xs font-bold text-white shadow-sm">
+                            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-linear-to-br from-cyan-500 to-blue-600 text-xs font-bold text-white shadow-sm">
                                 {initials}
                             </div>
 
                             {/* User Info */}
                             <div className="hidden text-left lg:block">
-                                <p className="max-w-[110px] truncate text-xs font-semibold text-slate-900 dark:text-white">
+                                <p className="max-w-27.5 truncate text-xs font-semibold text-slate-900 dark:text-white">
                                     {user?.username ||
                                         "Guest User"}
                                 </p>
@@ -215,7 +215,7 @@ const Nav = ({ onMenuClick }) => {
 
                                         <div className="flex items-center gap-3">
 
-                                            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 text-xs font-bold text-white">
+                                            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-linear-to-br from-cyan-500 to-blue-600 text-xs font-bold text-white">
                                                 {initials}
                                             </div>
 
