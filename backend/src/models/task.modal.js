@@ -8,6 +8,21 @@ const todo_Task = new Schema(
       trim: true,
     },
 
+    title: {
+      type: String,
+      trim: true,
+    },
+
+    dueDate: {
+      type: String,
+    },
+
+    priority: {
+      type: String,
+      enum: ["Low", "Medium", "High"],
+      default: "Medium",
+    },
+
     completed: {
       type: Boolean,
       default: false,
@@ -15,11 +30,11 @@ const todo_Task = new Schema(
 
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User", 
+      ref: "User",
     },
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 );
 

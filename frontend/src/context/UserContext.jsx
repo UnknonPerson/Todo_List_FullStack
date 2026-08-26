@@ -6,28 +6,29 @@ export const UserContext = createContext();
 export const UserProvider = ({children}) => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
 
-    const logout = () => {
+    const logout = async () => {
+        try {
+            await authServices.logout();
+        } catch (e) {
+            console.log("Failed to logout from backend: ", e);
+        }
+        localStorage.removeItem('user');
         setUser(null);
     }
 
-    const login = async (userData) => {
-        try{
-            const res = await authServices.login(userData);
-            console.log("Login Response: ",res);
-            return res;
-        }catch(e){
-            console.log("Filed To Login: ",e)
+    const login = async (username, password) => {
+        const res = await authServices.login(username, password);
+        const loggedInUser = res.data?.data?.user;
+        if (loggedInUser) {
+            localStorage.setItem('user', JSON.stringify(loggedInUser));
+            setUser(loggedInUser);
         }
+        return res;
     }
 
-    const register = async (userData) => {
-        try{
-           const res = await authServices.register(userData);
-           console.log("Registration Response: ",res);
-           return res;
-        }catch(e){
-            console.log("Somthing Happened while regestering : ",e);
-        }
+    const register = async (username, email, password) => {
+        const res = await authServices.register(username, email, password);
+        return res;
     }
 
     return (

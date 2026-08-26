@@ -25,4 +25,27 @@ app.use("/api/v1/auth" , authRoutes);
 import todoRoutes from './routes/todo.router.js'
 app.use("/api/v1/task", todoRoutes);
 
+// Global Error Handler
+import { ApiError } from './utils/api-error.js';
+
+app.use((err, req, res, next) => {
+    if (err instanceof ApiError) {
+        return res.status(err.statusCode).json({
+            statusCode: err.statusCode,
+            message: err.message,
+            success: false,
+            errors: err.errors,
+            data: null,
+        });
+    }
+
+    return res.status(500).json({
+        statusCode: 500,
+        message: err.message || "Internal Server Error",
+        success: false,
+        errors: [],
+        data: null,
+    });
+});
+
 export default app;

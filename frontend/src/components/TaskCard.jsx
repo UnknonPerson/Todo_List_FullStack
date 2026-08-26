@@ -9,8 +9,10 @@ import {
 } from "lucide-react";
 import { useTasks } from "../context/TaskContext";
 
-const TaskCard = ({ id, title, dueDate, priority, completed = false }) => {
-  const { task,removeTask, updateTask } = useTasks();
+const TaskCard = ({ task }) => {
+  const { removeTask, toggleComplete, updateTask } = useTasks();
+
+  const { _id, title, dueDate, priority, completed = false } = task;
 
   const getPriorityStyle = (priority) => {
     switch (priority) {
@@ -26,18 +28,14 @@ const TaskCard = ({ id, title, dueDate, priority, completed = false }) => {
   };
 
   const handleComplete = () => {
-    updateTask(id, {
-      completed: !completed,
-    });
+    toggleComplete(_id);
   };
 
   const handleEdit = () => {
-    console.log("Edit Task:", id);
-
-    // TODO:
-    // Open edit modal
-    // OR navigate to edit page
-    // OR set selected task in context
+    const newTitle = window.prompt("Edit task title:", title);
+    if (newTitle && newTitle.trim() !== "") {
+      updateTask(_id, { title: newTitle });
+    }
   };
 
   const handleDelete = () => {
@@ -46,8 +44,7 @@ const TaskCard = ({ id, title, dueDate, priority, completed = false }) => {
     );
 
     if (confirmDelete) {
-      removeTask(id);
-      console.log(task);
+      removeTask(_id);
     }
   };
 
@@ -84,7 +81,7 @@ const TaskCard = ({ id, title, dueDate, priority, completed = false }) => {
       {/* Due Date */}
       <div className="mt-4 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
         <CalendarClock size={16} className="text-gray-400" />
-        <span>Due: {dueDate}</span>
+        <span>Due: {dueDate || "No due date"}</span>
       </div>
 
       {/* Priority */}
@@ -96,7 +93,7 @@ const TaskCard = ({ id, title, dueDate, priority, completed = false }) => {
             priority
           )}`}
         >
-          {priority}
+          {priority || "Medium"}
         </span>
       </div>
 

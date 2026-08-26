@@ -1,28 +1,90 @@
 import { createContext, useContext, useState } from "react";
+import taskServises from "../Services/taskService.js";
 
 const TaskContext = createContext(null);
 
 export function TaskProvider({ children }) {
-    const [tasks, setTasks] = useState([{ id: 1, title: 'Complete React Fundamentals', dueDate: '2023-10-15', priority: 'High' },
-    { id: 2, title: 'Build a Portfolio Website', dueDate: '2023-10-20', priority: 'Medium' },
-    { id: 3, title: 'Learn Redux Basics', dueDate: '2023-10-25', priority: 'Low' },]);
+    const [tasks, setTasks] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-    const addTask = (task) => {
-        setTasks((prevTasks) => [...prevTasks, task]);
-    }
+    const fetchTasks = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const res = await taskServises.getTask();
+            setTasks(res.data?.data || []);
+        } catch (e) {
+            const message = e.response?.data?.message || "Failed to fetch tasks";
+            setError(message);
+            setTasks([]);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    const removeTask = (taskId) => {
-        setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
-    }
+    const addTask = async (taskData) => {
+        try {
+            const res = await taskServises.addTask(taskData);
+            const createdTask = res.data?.data?.task;
+            if (createdTask) {
+                setTasks((prevTasks) => [createdTask, ...prevTasks]);
+            }
+            return res;
+        } catch (e) {
+            const message = e.response?.data?.message || "Failed to add task";
+            setError(message);
+            throw e;
+        }
+    };
 
-    const updateTask = (updatedTask) => {
-        setTasks((prevTasks) =>
-            prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
-        );
-    }
+    const removeTask = async (taskId) => {
+        try {
+            await taskServises.deleteTask(taskId);
+            setTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId));
+        } catch (e) {
+            const message = e.response?.data?.message || "Failed to delete task";
+            setError(message);
+            throw e;
+        }
+    };
+
+    const updateTask = async (taskId, taskData) => {
+        try {
+            const res = await taskServises.editTask(taskId, taskData);
+            const updatedTask = res.data?.data?.task;
+            if (updatedTask) {
+                setTasks((prevTasks) =>
+                    prevTasks.map((task) => (task._id === updatedTask._id ? updatedTask : task))
+                );
+            }
+            return res;
+        } catch (e) {
+            const message = e.response?.data?.message || "Failed to update task";
+            setError(message);
+            throw e;
+        }
+    };
+
+    const toggleComplete = async (taskId) => {
+        try {
+            const res = await taskServises.toggalCompete(taskId);
+            const updatedTask = res.data?.data?.task;
+            if (updatedTask) {
+                setTasks((prevTasks) =>
+                    prevTasks.map((task) => (task._id === updatedTask._id ? updatedTask : task))
+                );
+            }
+            return res;
+        } catch (e) {
+            const message = e.response?.data?.message || "Failed to toggle task";
+            setError(message);
+            throw e;
+        }
+    };
 
     return (
-        <TaskContext.Provider value={{ tasks, setTasks, addTask, removeTask, updateTask }}>
+        <TaskContext.Provider value={{ tasks, setTasks, loading, error, fetchTasks, addTask, removeTask, updateTask, toggleComplete }}>
             {children}
         </TaskContext.Provider>
     );

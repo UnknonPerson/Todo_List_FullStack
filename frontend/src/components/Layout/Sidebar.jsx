@@ -5,9 +5,9 @@ import {
   User2,
   Settings,
   LogOut,
-  Link,
 } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
 
 const menuItems = [
   {
@@ -38,6 +38,18 @@ const menuItems = [
 ];
 
 const Sidebar = () => {
+  const { user, logout } = useUser();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login", { replace: true });
+  };
+
+  const initials = user?.username
+    ? user.username.trim().slice(0, 2).toUpperCase()
+    : "GU";
+
   return (
     <aside className="flex h-screen w-72 flex-col border-r border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
       {/* Logo */}
@@ -81,18 +93,21 @@ const Sidebar = () => {
       <div className="border-t border-gray-200 p-4 dark:border-gray-800">
         <div className="mb-4 flex items-center gap-3 rounded-xl bg-gray-100 p-3 dark:bg-gray-800">
           <div className="flex h-11 w-11 items-center justify-center rounded-full bg-blue-600 font-semibold text-white">
-            TK
+            {initials}
           </div>
 
           <div>
-            <h3 className="font-semibold">Tanish Kumar</h3>
+            <h3 className="font-semibold">{user?.username || "Guest User"}</h3>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Developer
+              {user?.email || ""}
             </p>
           </div>
         </div>
 
-        <button className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-red-500 transition hover:bg-red-50 dark:hover:bg-red-900/20">
+        <button
+          onClick={handleLogout}
+          className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-red-500 transition hover:bg-red-50 dark:hover:bg-red-900/20"
+        >
           <LogOut size={20} />
           <span>Logout</span>
         </button>

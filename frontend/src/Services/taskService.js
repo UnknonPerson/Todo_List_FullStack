@@ -1,20 +1,24 @@
 import api from './Api'
 
 const taskServises = {
-    getTask : () => {
-
+    getTask: async () => {
+        return await api.get("/v1/task/get");
     },
-    addTask : () => {
 
+    addTask: async (taskData) => {
+        return await api.post("/v1/task/create", taskData);
     },
-    deleteTask : () => {
 
+    deleteTask: async (taskId) => {
+        return await api.delete(`/v1/task/delete/${taskId}`);
     },
-    editTask : () => {
 
+    editTask: async (taskId, taskData) => {
+        return await api.patch(`/v1/task/update/${taskId}`, taskData);
     },
-    toggalCompete : () => {
-        
+
+    toggalCompete: async (taskId) => {
+        return await api.patch(`/v1/task/toggle/${taskId}`);
     }
 }
 export default taskServises;

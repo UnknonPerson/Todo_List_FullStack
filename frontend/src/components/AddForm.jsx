@@ -7,23 +7,33 @@ const AddForm = ({ onClose }) => {
     const [title, setTitle] = React.useState('');
     const [dueDate, setDueDate] = React.useState('');
     const [priority, setPriority] = React.useState('Medium');
+    const [submitError, setSubmitError] = React.useState(null);
+    const [submitting, setSubmitting] = React.useState(false);
 
-    const {addTask } = useTasks();
+    const { addTask } = useTasks();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle form submission logic here
-        try{
-            addTask({
+        setSubmitError(null);
+
+        if (!title.trim()) {
+            setSubmitError("Task title is required");
+            return;
+        }
+
+        setSubmitting(true);
+        try {
+            await addTask({
                 title,
                 dueDate,
                 priority
             });
-            //later handel backend request
-        }catch(e){
-            console.log(e);
+            onClose();
+        } catch (err) {
+            setSubmitError(err.response?.data?.message || "Failed to create task");
+        } finally {
+            setSubmitting(false);
         }
-        onClose();
     }
 
     return (
@@ -45,7 +55,13 @@ const AddForm = ({ onClose }) => {
                     Fill in the details below to add a new task.
                 </p>
 
-                <form className="mt-6 flex flex-col gap-4">
+                {submitError && (
+                    <p className="mt-4 rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600 dark:bg-red-500/20 dark:text-red-400">
+                        {submitError}
+                    </p>
+                )}
+
+                <form className="mt-6 flex flex-col gap-4" onSubmit={handleSubmit}>
 
                     <label className="flex flex-col gap-1">
                         <span className="font-semibold">Task Title</span>
@@ -79,25 +95,25 @@ const AddForm = ({ onClose }) => {
                         </select>
                     </label>
 
+                    <div className="flex justify-end gap-3 mt-6">
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className="px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700"
+                        >
+                            Cancel
+                        </button>
+
+                        <button
+                            type="submit"
+                            disabled={submitting}
+                            className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
+                        >
+                            {submitting ? "Adding..." : "Add Task"}
+                        </button>
+                    </div>
+
                 </form>
-
-                <div className="flex justify-end gap-3 mt-6">
-                    <button
-                        type="button"
-                        onClick={onClose}
-                        className="px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700"
-                    >
-                        Cancel
-                    </button>
-
-                    <button
-                        type="submit"
-                        className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700"
-                        onClick={handleSubmit}
-                    >
-                        Add Task
-                    </button>
-                </div>
 
             </div>
         </div>

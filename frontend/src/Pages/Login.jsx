@@ -1,17 +1,37 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import {
-    Mail,
-    Lock,
-    Eye,
-    EyeOff,
-    CheckCircle2,
-    ArrowLeftSquare,
-    ArrowLeft
-} from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Mail, Lock, Eye, EyeOff, CircleCheck as CheckCircle2, ArrowLeft } from "lucide-react";
+import { useUser } from "../context/UserContext";
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    const { login } = useUser();
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError(null);
+
+        if (!username.trim() || !password.trim()) {
+            setError("Please fill in all fields.");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            await login(username, password);
+            navigate("/tasks");
+        } catch (err) {
+            setError(err.response?.data?.message || "Login failed. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-zinc-950 flex">
@@ -78,14 +98,20 @@ const Login = () => {
                         </Link>
                     </div>
 
-                    <form className="mt-8 space-y-6">
+                    {error && (
+                        <p className="mt-4 rounded-lg bg-red-500/10 px-4 py-3 text-sm text-red-400">
+                            {error}
+                        </p>
+                    )}
 
-                        {/* Email */}
+                    <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+
+                        {/* Username */}
 
                         <div>
 
                             <label className="mb-2 block text-sm text-zinc-300">
-                                Email
+                                Username
                             </label>
 
                             <div className="flex items-center rounded-xl border border-zinc-700 bg-zinc-800 px-4">
@@ -93,9 +119,11 @@ const Login = () => {
                                 <Mail size={18} className="text-zinc-500" />
 
                                 <input
-                                    type="email"
-                                    placeholder="Enter your email"
+                                    type="text"
+                                    placeholder="Enter your username"
                                     className="w-full bg-transparent px-3 py-4 text-white outline-none"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
                                 />
 
                             </div>
@@ -118,6 +146,8 @@ const Login = () => {
                                     type={showPassword ? "text" : "password"}
                                     placeholder="Enter your password"
                                     className="w-full bg-transparent px-3 py-4 text-white outline-none"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                 />
 
                                 <button
@@ -163,9 +193,11 @@ const Login = () => {
                         {/* Login */}
 
                         <button
-                            className="w-full rounded-xl bg-blue-600 py-4 font-semibold text-white transition hover:bg-blue-700"
+                            type="submit"
+                            disabled={loading}
+                            className="w-full rounded-xl bg-blue-600 py-4 font-semibold text-white transition hover:bg-blue-700 disabled:opacity-50"
                         >
-                            Login
+                            {loading ? "Logging in..." : "Login"}
                         </button>
 
                     </form>

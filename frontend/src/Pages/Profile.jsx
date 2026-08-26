@@ -1,25 +1,20 @@
 import React from "react";
-import {
-  User,
-  Mail,
-  Shield,
-  Calendar,
-  CheckCircle2,
-  Clock3,
-  ListTodo,
-  Palette,
-  LogOut,
-  Pencil,
-  Lock,
-} from "lucide-react";
+import { User, Mail, Shield, Calendar, CircleCheck as CheckCircle2, Clock3, ListTodo, Palette, LogOut, Pencil, Lock } from "lucide-react";
 import { useUser } from "../context/UserContext";
 import { useTasks } from "../context/TaskContext";
 import { useTheme } from "../context/ThemeContext";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { user, logout } = useUser();
   const { tasks } = useTasks();
   const { theme } = useTheme();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login", { replace: true });
+  };
 
   const totalTasks = tasks.length;
   const completedTasks = tasks.filter((task) => task.completed).length;
@@ -31,12 +26,9 @@ const Profile = () => {
       : Math.round((completedTasks / totalTasks) * 100);
 
   const initials =
-    user?.name
+    user?.username
       ?.trim()
-      .split(/\s+/)
-      .map((word) => word[0])
       .slice(0, 2)
-      .join("")
       .toUpperCase() || "GU";
 
   return (
@@ -63,7 +55,7 @@ const Profile = () => {
             {/* User Info */}
             <div className="flex-1 text-center md:text-left">
               <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
-                {user?.name || "Guest User"}
+                {user?.username || "Guest User"}
               </h1>
 
               <p className="mt-1 text-gray-500 dark:text-gray-400">
@@ -88,7 +80,7 @@ const Profile = () => {
               </button>
 
               <button
-                onClick={logout}
+                onClick={handleLogout}
                 className="flex items-center gap-2 rounded-lg bg-red-500 px-4 py-2 text-white transition hover:bg-red-600"
               >
                 <LogOut size={18} />
@@ -145,9 +137,9 @@ const Profile = () => {
             <div className="flex items-center gap-4">
               <User className="text-blue-500" />
               <div>
-                <p className="text-sm text-gray-500">Name</p>
+                <p className="text-sm text-gray-500">Username</p>
                 <p className="font-semibold dark:text-white">
-                  {user?.name || "Guest User"}
+                  {user?.username || "Guest User"}
                 </p>
               </div>
             </div>

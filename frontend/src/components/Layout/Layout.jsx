@@ -1,8 +1,15 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 import Nav from "./Nav";
 import Sidebar from "./Sidebar";
+import { useUser } from "../../context/UserContext";
 
 const Layout = () => {
+  const { user } = useUser();
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-950">
       {/* Sidebar */}

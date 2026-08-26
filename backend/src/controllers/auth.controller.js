@@ -3,6 +3,7 @@ import { ApiResponse } from "../utils/api-responce.js";
 import { ApiError } from "../utils/api-error.js";
 import { asyncHandler } from "../utils/async-handler.js";
 import { emailVerificationMailgenContent, sendEmail } from "../utils/mail.js";
+import crypto from "crypto";
 
 
 const registerUser = asyncHandler(async (req, res) => {
@@ -89,7 +90,7 @@ const login = asyncHandler(async (req, res) => {
   const accessToken = user.generateAccessToken();
   const refreshToken = user.generateRefreshToken();
 
-  user.refeshToken = refreshToken;
+  user.refreshToken = refreshToken;
   await user.save({ validateBeforeSave: false });
 
   const loggedInUser = await User.findById(user._id).select(
@@ -133,7 +134,7 @@ const logout = asyncHandler(async (req, res) => {
 
   const options = {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === "production",
   };
 
   return res

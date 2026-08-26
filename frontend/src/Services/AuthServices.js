@@ -1,9 +1,9 @@
 import api from "./Api";
 
 const authServices = {
-    register: async (name, email, password) => {
+    register: async (username, email, password) => {
         return await api.post("/v1/auth/register", {
-            name,
+            username,
             email,
             password,
         });
@@ -13,9 +13,9 @@ const authServices = {
         return await api.get("/v1/healthcheck");
     },
 
-    login: async (email, password) => {
+    login: async (username, password) => {
         return await api.post("/v1/auth/login", {
-            email,
+            username,
             password,
         });
     },
@@ -24,12 +24,8 @@ const authServices = {
         return await api.post("/v1/auth/logout");
     },
 
-    getCurrentUser: async () => {
-        return await api.get("/v1/auth/me");
-    },
-
-    updateProfile: async (data) => {
-        return await api.put("/v1/auth/profile", data);
+    verifyEmail: async (verificationToken) => {
+        return await api.get(`/v1/auth/verify-email/${verificationToken}`);
     },
 };
 

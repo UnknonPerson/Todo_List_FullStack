@@ -28,11 +28,11 @@ const userSchema = new Schema(
             type: String,
             required: [true, 'Password is Required']
         },
-        isEmailVerifide: {
+        isEmailVerified: {
             type: Boolean,
             default: false
         },
-        refeshToken: {
+        refreshToken: {
             type: String
         },
         forgotPasswordToken: {
@@ -40,6 +40,9 @@ const userSchema = new Schema(
         },
         forgotPasswordExpiry: {
             type: Date
+        },
+        emailVerificationToken: {
+            type: String
         },
         emailVerificationExpiry: {
             type: Date

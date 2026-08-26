@@ -1,14 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import {
-  User,
-  Mail,
-  Lock,
-  Eye,
-  EyeOff,
-  CheckCircle2,
-  ArrowLeft
-} from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { User, Mail, Lock, Eye, EyeOff, CircleCheck as CheckCircle2, ArrowLeft } from "lucide-react";
 import { useUser } from "../context/UserContext";
 
 const Signup = () => {
@@ -18,36 +10,37 @@ const Signup = () => {
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const { register } = useUser();
+  const navigate = useNavigate();
 
   const handelSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
+
     if(password !== confirmPassword) {
-      alert("Passwords do not match.");
+      setError("Passwords do not match.");
       setPassword("");
       setConfirmPassword("");
       return;
     }
-    if(!name.trim() || !email.trim() || !password.trim()){
-      alert("Please fill in all fields.");
+    if(!username.trim() || !email.trim() || !password.trim()){
+      setError("Please fill in all fields.");
       return;
     }
-    const userData = {
-      name,
-      email,
-      password,
-      role: "user"
-    };
-    console.log(userData);
 
-    try{
-      const res = await register(userData);
-      console.log(res);
-    }catch(e){
-      console.log("Somthing Happened while regestering : ",e);
+    setLoading(true);
+    try {
+      await register(username, email, password);
+      navigate("/login");
+    } catch (err) {
+      setError(err.response?.data?.message || "Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -132,13 +125,19 @@ const Signup = () => {
             </Link>
           </div>
 
-          <form className="mt-8 space-y-5">
+          {error && (
+            <p className="mt-4 rounded-lg bg-red-500/10 px-4 py-3 text-sm text-red-400">
+              {error}
+            </p>
+          )}
 
-            {/* Name */}
+          <form className="mt-8 space-y-5" onSubmit={handelSubmit}>
+
+            {/* Username */}
 
             <div>
               <label className="mb-2 block text-sm text-zinc-300">
-                Full Name
+                Username
               </label>
 
               <div className="flex items-center rounded-xl border border-zinc-700 bg-zinc-800 px-4">
@@ -147,9 +146,10 @@ const Signup = () => {
 
                 <input
                   type="text"
-                  placeholder="Enter your name"
+                  placeholder="Choose a username"
                   className="w-full bg-transparent px-3 py-4 text-white outline-none"
-                  onChange={(e) => setName(e.target.value)}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
 
               </div>
@@ -170,6 +170,7 @@ const Signup = () => {
                   type="email"
                   placeholder="Enter your email"
                   className="w-full bg-transparent px-3 py-4 text-white outline-none"
+                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
 
@@ -191,6 +192,7 @@ const Signup = () => {
                   type={showPassword ? "text" : "password"}
                   placeholder="Create password"
                   className="w-full bg-transparent px-3 py-4 text-white outline-none"
+                  value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
 
@@ -220,6 +222,7 @@ const Signup = () => {
                   type={showConfirm ? "text" : "password"}
                   placeholder="Confirm password"
                   className="w-full bg-transparent px-3 py-4 text-white outline-none"
+                  value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
 
@@ -252,10 +255,11 @@ const Signup = () => {
             {/* Button */}
 
             <button
-              className="w-full rounded-xl bg-blue-600 py-4 font-semibold text-white transition hover:bg-blue-700"
-              onClick={handelSubmit}
+              type="submit"
+              disabled={loading}
+              className="w-full rounded-xl bg-blue-600 py-4 font-semibold text-white transition hover:bg-blue-700 disabled:opacity-50"
             >
-              Create Account
+              {loading ? "Creating..." : "Create Account"}
             </button>
 
           </form>

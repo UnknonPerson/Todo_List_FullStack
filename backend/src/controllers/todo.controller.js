@@ -5,14 +5,17 @@ import { ApiResponse } from '../utils/api-responce.js';
 
 const creatTask = asyncHandler(async (req, res) => {
 
-    const { task } = req.body;
+    const { task, title, dueDate, priority } = req.body;
 
-    if (!task) {
+    if (!task && !title) {
         throw new ApiError(400, "Please enter a valid task");
     }
 
     const createdTask = await Todo.create({
-        task,
+        task: task || title,
+        title: title || task,
+        dueDate,
+        priority: priority || "Medium",
         user: req.user._id,
         completed: false,
     });
@@ -33,15 +36,22 @@ const creatTask = asyncHandler(async (req, res) => {
 
 const updateTask = asyncHandler(async (req, res) => {
     const { taskId } = req.params;
-    const { task } = req.body;
+    const { task, title, dueDate, priority, completed } = req.body;
 
-    if (!task || task.trim() === "") {
+    if (!task && !title && dueDate === undefined && priority === undefined && completed === undefined) {
         throw new ApiError(400, "Please provide a valid task");
     }
 
+    const updateFields = {};
+    if (task !== undefined) updateFields.task = task;
+    if (title !== undefined) updateFields.title = title;
+    if (dueDate !== undefined) updateFields.dueDate = dueDate;
+    if (priority !== undefined) updateFields.priority = priority;
+    if (completed !== undefined) updateFields.completed = completed;
+
     const updatedTask = await Todo.findOneAndUpdate(
-        { _id: taskId, user: req.user._id }, // ensure ownership
-        { $set: { task } },
+        { _id: taskId, user: req.user._id },
+        { $set: updateFields },
         { new: true }
     );
 
@@ -105,10 +115,6 @@ const getTask = asyncHandler(async (req, res) => {
 
     const tasks = await Todo.find({ user: user._id })
     .sort({ createdAt: -1 });
-
-    if (tasks.length === 0) {
-        throw new ApiError(404, "No tasks found");
-    }
 
     return res.status(200).json(
         new ApiResponse(200, tasks, tasks.length ? "Tasks found" : "No tasks yet")

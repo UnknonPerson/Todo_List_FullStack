@@ -15,16 +15,13 @@ const Nav = ({ onMenuClick }) => {
   };
 
   const initials = useMemo(() => {
-    if (!user?.name) return "GU";
+    if (!user?.username) return "GU";
 
-    return user.name
+    return user.username
       .trim()
-      .split(/\s+/)
       .slice(0, 2)
-      .map((word) => word[0])
-      .join("")
       .toUpperCase();
-  }, [user?.name]);
+  }, [user?.username]);
 
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-gray-200 bg-white px-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
@@ -77,7 +74,7 @@ const Nav = ({ onMenuClick }) => {
 
           <div className="hidden md:block text-left">
             <p className="font-medium text-gray-900 dark:text-white">
-              {user?.name || "Guest User"}
+              {user?.username || "Guest User"}
             </p>
 
             <p className="text-xs text-gray-500 dark:text-gray-400">
