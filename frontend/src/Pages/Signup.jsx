@@ -9,10 +9,47 @@ import {
   CheckCircle2,
   ArrowLeft
 } from "lucide-react";
+import { useUser } from "../context/UserContext";
 
 const Signup = () => {
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
+  const { register } = useUser();
+
+  const handelSubmit = async (e) => {
+    e.preventDefault();
+    if(password !== confirmPassword) {
+      alert("Passwords do not match.");
+      setPassword("");
+      setConfirmPassword("");
+      return;
+    }
+    if(!name.trim() || !email.trim() || !password.trim()){
+      alert("Please fill in all fields.");
+      return;
+    }
+    const userData = {
+      name,
+      email,
+      password,
+      role: "user"
+    };
+    console.log(userData);
+
+    try{
+      const res = await register(userData);
+      console.log(res);
+    }catch(e){
+      console.log("Somthing Happened while regestering : ",e);
+    }
+  }
 
   return (
     <div className="min-h-screen bg-zinc-950 flex">
@@ -82,18 +119,18 @@ const Signup = () => {
           </h2>
 
           <p className="mt-2 text-zinc-400">
-            Create your free account to get started.
+            Create your account to get started And Thanks Tanish later.
           </p>
 
           <div className="absolute top-6 left-6">
-  <Link
-    to="/"
-    className="flex items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-2 text-zinc-300 transition hover:bg-zinc-800 hover:text-white"
-  >
-    <ArrowLeft size={18} />
-    Back
-  </Link>
-</div>
+            <Link
+              to="/"
+              className="flex items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-2 text-zinc-300 transition hover:bg-zinc-800 hover:text-white"
+            >
+              <ArrowLeft size={18} />
+              Back
+            </Link>
+          </div>
 
           <form className="mt-8 space-y-5">
 
@@ -112,6 +149,7 @@ const Signup = () => {
                   type="text"
                   placeholder="Enter your name"
                   className="w-full bg-transparent px-3 py-4 text-white outline-none"
+                  onChange={(e) => setName(e.target.value)}
                 />
 
               </div>
@@ -132,6 +170,7 @@ const Signup = () => {
                   type="email"
                   placeholder="Enter your email"
                   className="w-full bg-transparent px-3 py-4 text-white outline-none"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
 
               </div>
@@ -152,6 +191,7 @@ const Signup = () => {
                   type={showPassword ? "text" : "password"}
                   placeholder="Create password"
                   className="w-full bg-transparent px-3 py-4 text-white outline-none"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
 
                 <button
@@ -180,6 +220,7 @@ const Signup = () => {
                   type={showConfirm ? "text" : "password"}
                   placeholder="Confirm password"
                   className="w-full bg-transparent px-3 py-4 text-white outline-none"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                 />
 
                 <button
@@ -212,6 +253,7 @@ const Signup = () => {
 
             <button
               className="w-full rounded-xl bg-blue-600 py-4 font-semibold text-white transition hover:bg-blue-700"
+              onClick={handelSubmit}
             >
               Create Account
             </button>
