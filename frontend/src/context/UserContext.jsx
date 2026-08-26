@@ -11,17 +11,26 @@ export const UserProvider = ({children}) => {
             await authServices.logout();
         } catch (e) {
             console.log("Failed to logout from backend: ", e);
+        }finally {
+            localStorage.removeItem('user');
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            setUser(null);
         }
-        localStorage.removeItem('user');
-        setUser(null);
     }
 
     const login = async (username, password) => {
         const res = await authServices.login(username, password);
-        const loggedInUser = res.data?.data?.user;
-        if (loggedInUser) {
-            localStorage.setItem('user', JSON.stringify(loggedInUser));
-            setUser(loggedInUser);
+        const data = res.data?.data;
+        if (data) {
+
+            const { accessToken, refreshToken, user } = data;
+
+            localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('refreshToken', refreshToken);
+
+            setUser(data);
         }
         return res;
     }

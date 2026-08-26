@@ -35,7 +35,8 @@ const Signup = () => {
 
     setLoading(true);
     try {
-      await register(username, email, password);
+      const res = await register(username, email, password);
+      console.log(res);
       navigate("/login");
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed. Please try again.");

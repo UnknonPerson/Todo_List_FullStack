@@ -24,7 +24,8 @@ const Login = () => {
 
         setLoading(true);
         try {
-            await login(username, password);
+            const res = await login(username, password);
+            console.log(res);
             navigate("/tasks");
         } catch (err) {
             setError(err.response?.data?.message || "Login failed. Please try again.");

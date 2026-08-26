@@ -28,5 +28,4 @@ const authServices = {
         return await api.get(`/v1/auth/verify-email/${verificationToken}`);
     },
 };
-
 export default authServices;

@@ -1,119 +1,228 @@
 import {
-  LayoutDashboard,
-  CheckSquare,
-  Calendar,
-  User2,
-  Settings,
-  LogOut,
+    LayoutDashboard,
+    CheckSquare,
+    Calendar,
+    User2,
+    Settings,
+    LogOut,
+    ChevronRight,
 } from "lucide-react";
-import { NavLink, useNavigate } from "react-router-dom";
+
+import {
+    NavLink,
+    useNavigate,
+} from "react-router-dom";
+
 import { useUser } from "../../context/UserContext";
 
 const menuItems = [
-  {
-    name: "Dashboard",
-    path: "/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    name: "Tasks",
-    path: "/tasks",
-    icon: CheckSquare,
-  },
-  {
-    name: "Calendar",
-    path: "/calendar",
-    icon: Calendar,
-  },
-  {
-    name: "Profile",
-    path: "/profile",
-    icon: User2,
-  },
-  {
-    name: "Settings",
-    path: "/setting",
-    icon: Settings,
-  },
+    {
+        name: "Dashboard",
+        path: "/dashboard",
+        icon: LayoutDashboard,
+    },
+    {
+        name: "Tasks",
+        path: "/tasks",
+        icon: CheckSquare,
+    },
+    {
+        name: "Calendar",
+        path: "/calendar",
+        icon: Calendar,
+    },
+    {
+        name: "Profile",
+        path: "/profile",
+        icon: User2,
+    },
 ];
 
 const Sidebar = () => {
-  const { user, logout } = useUser();
-  const navigate = useNavigate();
+    const { user, logout } = useUser();
+    const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login", { replace: true });
-  };
+    const handleLogout = () => {
+        logout();
 
-  const initials = user?.username
-    ? user.username.trim().slice(0, 2).toUpperCase()
-    : "GU";
+        navigate("/login", {
+            replace: true,
+        });
+    };
 
-  return (
-    <aside className="flex h-screen w-72 flex-col border-r border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-      {/* Logo */}
-      <NavLink to="/" className="block">
-        <div className="border-b border-gray-200 px-6 py-6 dark:border-gray-800">
-          <h1 className="text-2xl font-bold text-blue-600">TaskFlow</h1>
+    const initials = user?.username
+        ? user.username
+              .trim()
+              .slice(0, 2)
+              .toUpperCase()
+        : "GU";
 
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Organize your work</p>
-        </div>
-      </NavLink>
+    return (
+        <aside className="flex min-h-screen w-64 shrink-0 flex-col border-r border-slate-200 bg-white transition-colors duration-300 dark:border-slate-700/60 dark:bg-[#07111f]">
 
-      {/* Navigation */}
-      <nav className="flex-1 p-4">
-        <ul className="space-y-2">
-          {menuItems.map((item) => {
-            const Icon = item.icon;
+            {/* ===================================== */}
+            {/* Logo                                  */}
+            {/* ===================================== */}
 
-            return (
-              <li key={item.name}>
-                <NavLink
-                  to={item.path}
-                  className={({ isActive }) =>
-                    `flex items-center gap-3 rounded-xl px-4 py-3 font-medium transition-all duration-200
-                    ${
-                      isActive
-                        ? "bg-blue-600 text-white shadow-md"
-                        : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-                    }`
-                  }
+            <NavLink
+                to="/dashboard"
+                className="group block"
+            >
+                <div className="border-b border-slate-200 px-5 py-5 dark:border-slate-700/60">
+
+                    <div className="flex items-center gap-3">
+
+                        {/* Logo */}
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/20">
+                            <CheckSquare
+                                size={21}
+                                className="text-white"
+                                strokeWidth={2.5}
+                            />
+                        </div>
+
+                        {/* Brand */}
+                        <div>
+                            <h1 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
+                                TaskFlow
+                            </h1>
+
+                            <p className="text-[10px] font-medium text-slate-400 dark:text-slate-500">
+                                Organize. Focus. Complete.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </NavLink>
+
+            {/* ===================================== */}
+            {/* Navigation                            */}
+            {/* ===================================== */}
+
+            <nav className="flex-1 px-3 py-5">
+
+                <p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                    Workspace
+                </p>
+
+                <ul className="space-y-1">
+
+                    {menuItems.map((item) => {
+                        const Icon = item.icon;
+
+                        return (
+                            <li key={item.name}>
+
+                                <NavLink
+                                    to={item.path}
+                                    className={({ isActive }) =>
+                                        `
+                                        group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium
+                                        transition-all duration-200
+                                        ${
+                                            isActive
+                                                ? "bg-cyan-500 text-white shadow-md shadow-cyan-500/20"
+                                                : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/80 dark:hover:text-white"
+                                        }
+                                        `
+                                    }
+                                >
+                                    {({ isActive }) => (
+                                        <>
+                                            {/* Icon */}
+                                            <span
+                                                className={`
+                                                    flex h-8 w-8 items-center justify-center rounded-lg
+                                                    ${
+                                                        isActive
+                                                            ? "bg-white/15"
+                                                            : "bg-slate-100 dark:bg-slate-800"
+                                                    }
+                                                `}
+                                            >
+                                                <Icon
+                                                    size={17}
+                                                    strokeWidth={
+                                                        isActive
+                                                            ? 2.5
+                                                            : 2
+                                                    }
+                                                />
+                                            </span>
+
+                                            {/* Name */}
+                                            <span className="flex-1">
+                                                {item.name}
+                                            </span>
+
+                                            {/* Active Arrow */}
+                                            {isActive && (
+                                                <ChevronRight
+                                                    size={15}
+                                                    className="text-white/80"
+                                                />
+                                            )}
+                                        </>
+                                    )}
+                                </NavLink>
+
+                            </li>
+                        );
+                    })}
+
+                </ul>
+            </nav>
+
+            {/* ===================================== */}
+            {/* User Section                           */}
+            {/* ===================================== */}
+
+            <div className="border-t border-slate-200 p-3 dark:border-slate-700/60">
+
+                {/* User Card */}
+                <div className="mb-2 rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-700/60 dark:bg-slate-800/50">
+
+                    <div className="flex items-center gap-3">
+
+                        {/* Avatar */}
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 text-xs font-bold text-white">
+                            {initials}
+                        </div>
+
+                        {/* User Info */}
+                        <div className="min-w-0 flex-1">
+
+                            <h3 className="truncate text-xs font-semibold text-slate-900 dark:text-white">
+                                {user?.username ||
+                                    "Guest User"}
+                            </h3>
+
+                            <p className="mt-0.5 truncate text-[10px] text-slate-500 dark:text-slate-400">
+                                {user?.email ||
+                                    "No email available"}
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+
+                {/* Logout */}
+                <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-red-500 transition hover:bg-red-50 hover:text-red-600 dark:text-red-400 dark:hover:bg-red-500/10 dark:hover:text-red-300"
                 >
-                  <Icon size={20} />
-                  <span>{item.name}</span>
-                </NavLink>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
+                    <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-50 dark:bg-red-500/10">
+                        <LogOut size={16} />
+                    </span>
 
-      {/* User Section */}
-      <div className="border-t border-gray-200 p-4 dark:border-gray-800">
-        <div className="mb-4 flex items-center gap-3 rounded-xl bg-gray-100 p-3 dark:bg-gray-800">
-          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-blue-600 font-semibold text-white">
-            {initials}
-          </div>
-
-          <div>
-            <h3 className="font-semibold">{user?.username || "Guest User"}</h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              {user?.email || ""}
-            </p>
-          </div>
-        </div>
-
-        <button
-          onClick={handleLogout}
-          className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-red-500 transition hover:bg-red-50 dark:hover:bg-red-900/20"
-        >
-          <LogOut size={20} />
-          <span>Logout</span>
-        </button>
-      </div>
-    </aside>
-  );
+                    <span>
+                        Logout
+                    </span>
+                </button>
+            </div>
+        </aside>
+    );
 };
 
 export default Sidebar;
