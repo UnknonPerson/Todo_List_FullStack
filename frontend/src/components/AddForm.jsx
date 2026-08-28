@@ -5,7 +5,6 @@ import { useTasks } from '../context/TaskContext';
 const AddForm = ({ onClose }) => {
 
     const [title, setTitle] = React.useState('');
-    const [task, setTask] = React.useState('');
     const [dueDate, setDueDate] = React.useState('');
     const [priority, setPriority] = React.useState('Medium');
     const [submitError, setSubmitError] = React.useState(null);
@@ -26,7 +25,6 @@ const AddForm = ({ onClose }) => {
         try {
             await addTask({
                 title,
-                task,
                 dueDate,
                 priority
             });
@@ -73,16 +71,6 @@ const AddForm = ({ onClose }) => {
                             className="border border-gray-300 rounded p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
-                        />
-                    </label>
-                    <label className="flex flex-col gap-1">
-                        <span className="font-semibold">Task Description</span>
-                        <input
-                            type="text"
-                            placeholder="Enter task Description"
-                            className="border border-gray-300 rounded p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                            value={description}
-                            onChange={(e) => setTask(e.target.value)}
                         />
                     </label>
                     <label className="flex flex-col gap-1">
