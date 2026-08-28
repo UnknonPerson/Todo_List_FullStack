@@ -166,10 +166,10 @@ const Dashboard = () => {
                                             {task.title}
                                         </h3>
 
-                                        <p className="mt-1 truncate text-sm text-slate-500 dark:text-slate-400">
+                                        {/* <p className="mt-1 truncate text-sm text-slate-500 dark:text-slate-400">
                                             {task.description ||
                                                 "No description"}
-                                        </p>
+                                        </p> */}
                                     </div>
 
                                     <span
